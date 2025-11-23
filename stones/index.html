@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Infinity Stones Dial</title>
+  <style>
+    :root{
+      --stone-size:90px;
+      --radius:200px;
+      --bg:#05060a;
+    }
+    html,body{
+      margin:0;height:100%;display:flex;justify-content:center;align-items:center;
+      background:radial-gradient(circle at 50% 50%,#0b0f16,#05060a,#000);
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      overflow:hidden;color:#eee;
+    }
+
+    .dial{
+      position:relative;width:600px;height:600px;display:flex;justify-content:center;align-items:center;
+    }
+
+    .center-text{
+      position:absolute;font-size:32px;font-weight:600;pointer-events:none;
+      text-shadow:0 0 12px rgba(255,255,255,0.4);
+      opacity:0;transition:opacity .2s ease;
+    }
+
+.stone{
+  position:absolute;
+  width:var(--stone-size);
+  height:var(--stone-size);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:transform .3s ease, filter .3s ease, box-shadow .3s ease;
+  animation:float 4s ease-in-out infinite;
+  background:transparent;
+
+}
+
+.stone img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  mix-blend-mode:screen;
+
+}
+.stone:hover{transform:scale(1.18);filter:brightness(2.25);}
+
+    /* Stone colors 
+    .space{background:radial-gradient(circle,#9fe5ff,#33c2ff,#0b6fb2);}
+    .mind{background:radial-gradient(circle,#ffe6ff,#ff6af0,#be0095);}
+    .reality{background:radial-gradient(circle,#ffe9cf,#ff9f41,#c15d00);}
+    .power{background:radial-gradient(circle,#ffdede,#ff4f4f,#b30000);}
+    .time{background:radial-gradient(circle,#eaffd6,#a7e04d,#3f7a00);}
+    .soul{background:radial-gradient(circle,#fff1b2,#ffd24a,#c38b00);}
+    */
+
+  @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-14px); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="dial">
+    <div class="center-text" id="centerText"></div>
+
+
+<!-- Stones will be positioned via JS around the circle -->
+<a class="stone space" data-name="Space" data-color="#33c2ff" href="https://example.com/space" target="_blank">
+<img src="img2.png" style="width:100%; height:100%; object-fit:contain;">
+</a>
+<a class="stone mind" data-name="Mind" data-color="#ff6af0" href="https://example.com/mind" target="_blank">
+<img src="img6.png" style="width:100%; height:100%; object-fit:contain;">
+</a>
+<a class="stone reality" data-name="Reality" data-color="#ff9f41" href="https://example.com/reality" target="_blank">
+<img src="img4.png" style="width:100%; height:100%; object-fit:contain;">
+</a>
+<a class="stone power" data-name="Power" data-color="#ff4f4f" href="https://example.com/power" target="_blank">
+<img src="img3.png" style="width:100%; height:100%; object-fit:contain;">
+</a>
+<a class="stone time" data-name="Time" data-color="#a7e04d" href="https://example.com/time" target="_blank">
+<img src="img5.png" style="width:100%; height:100%; object-fit:contain;">
+</a>
+<a class="stone soul" data-name="Soul" data-color="#ffd24a" href="https://example.com/soul" target="_blank">
+<img src="img1.png" style="width:100%; height:100%; object-fit:contain;">
+</a>
+</div>
+
+  <script>
+    const stones = document.querySelectorAll('.stone');
+    const center = document.getElementById('centerText');
+    const radius = 220;
+
+    stones.forEach((stone, i) => {
+      const angle = (i / stones.length) * (2 * Math.PI);
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      stone.style.left = 300 + x - 45 + 'px';
+      stone.style.top = 300 + y - 45 + 'px';
+
+      stone.addEventListener('mouseenter', () => {
+        center.textContent = stone.dataset.name;
+        center.style.opacity = 1;
+      });
+      stone.addEventListener('mouseleave', () => {
+        center.style.opacity = 0;
+      });
+    });
+  </script>
+</body>
+</html>
